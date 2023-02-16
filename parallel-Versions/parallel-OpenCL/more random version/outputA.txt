@@ -1,0 +1,488 @@
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+
+
+generation: 0
+
+winIndex: 7
+
+mutation: AAAAAAAACCAAACABCBAAACCAAAAAAAAAAAAAAAAAAABABCAAAAAAAAAACABABACAAAAAAAAACAAACAAAAAABACAADBAAAACCAAAAAAAAAAACCCABAAAAAAAACABACBAA
+
+winner: CABABACA
+
+pre: 999999
+
+smaller: 6
+
+pre<=smaller: 0
+
+!strcmp(winner,candidate): 0
+
+(int) (!strcmp(winner,candidate) || pre <= smaller): 0
+
+lookahead (before): 10
+
+lookahead (after): 10
+
+ENTERED first else
+candidate (before): AAAAAAAA
+
+candidate (after): CABABACA
+
+gen: 1
+
+generations: 10
+
+generation: 1
+randoms[0]= 290118
+randoms[1]= 623887
+randoms[2]= 591131
+randoms[3]= 604789
+randoms[4]= 837019
+randoms[5]= 73701
+randoms[6]= 661788
+randoms[7]= 640984
+randoms[8]= 579272
+randoms[9]= 465869
+randoms[10]= 28035
+randoms[11]= 254046
+randoms[12]= 253202
+randoms[13]= 388780
+randoms[14]= 704197
+randoms[15]= 666061
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+
+mutation: CABABACACBAABDACAABCBABCBABAACCACCBCBABCCABCDBABCABABACACBBABABACABABACADACABCCACABABACACBDABABACABABACACABABCCACABADACACAAABACA
+
+winner: CABABACA
+
+pre: 6
+
+smaller: 6
+
+pre<=smaller: 1
+
+!strcmp(winner,candidate): 1
+
+(int) (!strcmp(winner,candidate) || pre <= smaller): 1
+
+lookahead (before): 10
+
+lookahead (after): 9
+candidate (before): CABABACA
+
+candidate (after): CABABACA
+
+generation: 2
+randoms[0]= 574240
+randoms[1]= 319340
+randoms[2]= 605513
+randoms[3]= 998161
+randoms[4]= 939731
+randoms[5]= 484704
+randoms[6]= 198768
+randoms[7]= 51120
+randoms[8]= 763481
+randoms[9]= 630649
+randoms[10]= 66041
+randoms[11]= 591652
+randoms[12]= 103358
+randoms[13]= 566853
+randoms[14]= 348225
+randoms[15]= 909828
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+
+mutation: CABABACACCBBBABACCDABCAABABABACACCBCBACBCBBABAAACABABACACCBBBCABCABABACACACABACAAADADCCACABABCCACABABACADACBBAAAAABCBCCCCABABACA
+
+winner: CABABACA
+
+pre: 6
+
+smaller: 6
+
+pre<=smaller: 1
+
+!strcmp(winner,candidate): 1
+
+(int) (!strcmp(winner,candidate) || pre <= smaller): 1
+
+lookahead (before): 9
+
+lookahead (after): 8
+candidate (before): CABABACA
+
+candidate (after): CABABACA
+
+generation: 3
+randoms[0]= 190740
+randoms[1]= 455708
+randoms[2]= 514617
+randoms[3]= 544111
+randoms[4]= 529409
+randoms[5]= 176405
+randoms[6]= 185095
+randoms[7]= 625033
+randoms[8]= 158626
+randoms[9]= 729482
+randoms[10]= 395432
+randoms[11]= 928180
+randoms[12]= 118262
+randoms[13]= 99629
+randoms[14]= 594241
+randoms[15]= 692503
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+
+mutation: CABABACACABABCCAAABADAACCABACACACBBCBABACBCCBAACCABABCCABBDAADBACBBABAABCABADACACABABABACABABACACABABACACADCCBABCADABACACACABACA
+
+winner: CABABACA
+
+pre: 6
+
+smaller: 6
+
+pre<=smaller: 1
+
+!strcmp(winner,candidate): 1
+
+(int) (!strcmp(winner,candidate) || pre <= smaller): 1
+
+lookahead (before): 8
+
+lookahead (after): 7
+candidate (before): CABABACA
+
+candidate (after): CABABACA
+
+generation: 4
+randoms[0]= 935321
+randoms[1]= 716107
+randoms[2]= 690664
+randoms[3]= 391404
+randoms[4]= 200811
+randoms[5]= 405784
+randoms[6]= 442525
+randoms[7]= 964292
+randoms[8]= 552785
+randoms[9]= 508566
+randoms[10]= 72297
+randoms[11]= 172495
+randoms[12]= 591771
+randoms[13]= 936874
+randoms[14]= 82324
+randoms[15]= 782511
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+
+mutation: CABABACAAABAADCACABABACACABABACACABBBACACABABCCAAADADACACABABCBCCABABACBCABADACAACDCDACACACABAAACABABACACCDBDACACABABACAAABABACA
+
+winner: CABABACA
+
+pre: 6
+
+smaller: 6
+
+pre<=smaller: 1
+
+!strcmp(winner,candidate): 1
+
+(int) (!strcmp(winner,candidate) || pre <= smaller): 1
+
+lookahead (before): 7
+
+lookahead (after): 6
+candidate (before): CABABACA
+
+candidate (after): CABABACA
+
+generation: 5
+randoms[0]= 392582
+randoms[1]= 596941
+randoms[2]= 326622
+randoms[3]= 921991
+randoms[4]= 289699
+randoms[5]= 28069
+randoms[6]= 547024
+randoms[7]= 448325
+randoms[8]= 757551
+randoms[9]= 942456
+randoms[10]= 376506
+randoms[11]= 392165
+randoms[12]= 558437
+randoms[13]= 487099
+randoms[14]= 84668
+randoms[15]= 493758
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+
+mutation: CABABACADABACACACABABACACABADCCACABABACACABABACACABABACAAADADACCCBBABACACABABACACBBBBAAACBABAABACABABACABABABDCACABBBABCCABABACA
+
+winner: CABABACA
+
+pre: 6
+
+smaller: 6
+
+pre<=smaller: 1
+
+!strcmp(winner,candidate): 1
+
+(int) (!strcmp(winner,candidate) || pre <= smaller): 1
+
+lookahead (before): 6
+
+lookahead (after): 5
+candidate (before): CABABACA
+
+candidate (after): CABABACA
+
+generation: 6
+randoms[0]= 203206
+randoms[1]= 291684
+randoms[2]= 885163
+randoms[3]= 920370
+randoms[4]= 213821
+randoms[5]= 327688
+randoms[6]= 401014
+randoms[7]= 282958
+randoms[8]= 352606
+randoms[9]= 473311
+randoms[10]= 455454
+randoms[11]= 944377
+randoms[12]= 410185
+randoms[13]= 537778
+randoms[14]= 243240
+randoms[15]= 319119
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+
+mutation: CABABACACABCBABAABDBDCABAADABACACABCBABCCABABCCCCABABACACABADACACBBBBAAAAADAAACACBBBBABABABADBBCCABABACACADADACBCABCBABAAABABCCA
+
+winner: CABABACA
+
+pre: 6
+
+smaller: 6
+
+pre<=smaller: 1
+
+!strcmp(winner,candidate): 1
+
+(int) (!strcmp(winner,candidate) || pre <= smaller): 1
+
+lookahead (before): 5
+
+lookahead (after): 4
+candidate (before): CABABACA
+
+candidate (after): CABABACA
+
+generation: 7
+randoms[0]= 651071
+randoms[1]= 86214
+randoms[2]= 757462
+randoms[3]= 940770
+randoms[4]= 630635
+randoms[5]= 304487
+randoms[6]= 905448
+randoms[7]= 904538
+randoms[8]= 763295
+randoms[9]= 798306
+randoms[10]= 296703
+randoms[11]= 838085
+randoms[12]= 285405
+randoms[13]= 381372
+randoms[14]= 331843
+randoms[15]= 4964
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+
+mutation: CABABACAACDCBACACCBABABBCADABACACABCBABCBAACBDBACABABACACBDBDCCACABABACAAADADACAAABCBABAACDCDCBCCABABACACABABABAAADCBCCBCABABACA
+
+winner: CABABACA
+
+pre: 6
+
+smaller: 6
+
+pre<=smaller: 1
+
+!strcmp(winner,candidate): 1
+
+(int) (!strcmp(winner,candidate) || pre <= smaller): 1
+
+lookahead (before): 4
+
+lookahead (after): 3
+candidate (before): CABABACA
+
+candidate (after): CABABACA
+
+generation: 8
+randoms[0]= 189408
+randoms[1]= 733358
+randoms[2]= 925334
+randoms[3]= 403229
+randoms[4]= 577398
+randoms[5]= 326348
+randoms[6]= 686188
+randoms[7]= 930004
+randoms[8]= 799660
+randoms[9]= 657994
+randoms[10]= 390733
+randoms[11]= 726197
+randoms[12]= 712124
+randoms[13]= 150325
+randoms[14]= 561669
+randoms[15]= 363195
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+
+mutation: CABABACACABADABBCCBCBACABAAAAACACBBABACBCBBCBAAACABABACACCBBBACACABABACACADABACACABABCCAACBABBABCABABACACADCCBCAABBCBABBDACADBCA
+
+winner: CABABACA
+
+pre: 6
+
+smaller: 6
+
+pre<=smaller: 1
+
+!strcmp(winner,candidate): 1
+
+(int) (!strcmp(winner,candidate) || pre <= smaller): 1
+
+lookahead (before): 3
+
+lookahead (after): 2
+candidate (before): CABABACA
+
+candidate (after): CABABACA
+
+generation: 9
+randoms[0]= 236539
+randoms[1]= 319131
+randoms[2]= 820318
+randoms[3]= 383526
+randoms[4]= 139970
+randoms[5]= 242118
+randoms[6]= 288064
+randoms[7]= 419618
+randoms[8]= 40424
+randoms[9]= 101120
+randoms[10]= 257703
+randoms[11]= 325829
+randoms[12]= 482492
+randoms[13]= 105898
+randoms[14]= 330793
+randoms[15]= 188252
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+ret = 0 
+
+mutation: CABABACAAABABCCACABABACAAADABACACABABACACADCBABACABABACAAADADABACABABACACABABACACBBADCCCBAAABBCCCABABACACABBDACAAADABCCBCABABACA
+
+winner: CABABACA
+
+pre: 6
+
+smaller: 6
+
+pre<=smaller: 1
+
+!strcmp(winner,candidate): 1
+
+(int) (!strcmp(winner,candidate) || pre <= smaller): 1
+
+lookahead (before): 2
+
+lookahead (after): 1
+candidate (before): CABABACA
+
+candidate (after): CABABACA
+
+
+results:
+6 7 6 6 6 6 6 6 6 6 7 6 6 6 6 6 
+
+mutation:
+
+0 CABABACA
+1 AABABCCA
+2 CABABACA
+3 AADABACA
+4 CABABACA
+5 CADCBABA
+6 CABABACA
+7 AADADABA
+8 CABABACA
+9 CABABACA
+10 CBBADCCC
+11 BAAABBCC
+12 CABABACA
+13 CABBDACA
+14 AADABCCB
+15 CABABACA
+winner: CABABACA
+
+pre: 6
+
+smaller: 6
+
