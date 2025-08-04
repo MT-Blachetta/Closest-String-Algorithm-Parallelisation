@@ -1,61 +1,109 @@
+"""Evolutionary algorithm for the closest string problem using MPI.
+
+This module provides a parallel implementation of an evolutionary search
+for a string that minimises the maximum Hamming distance to a given list
+of input strings.  It distributes work across multiple processes using
+``mpi4py``.
+"""
+
 import random
 from mpi4py import MPI
 import sys
 
 COMM = MPI.COMM_WORLD
 
-def count_all(duplicates,ratio=False,rounded=0):
+def count_all(duplicates, ratio=False, rounded=0):
+    """Count occurrences in *duplicates*.
+
+    When ``ratio`` is ``True`` the function also stores the percentage of
+    each item with an optional number of decimal places controlled by
+    ``rounded``.  The return value is a dictionary mapping each element to
+    either a count or a ``(count, percentage)`` tuple.
+    """
+
     freq = {}
 
-    if(ratio):
+    if ratio:
 
         d_size = len(duplicates)
 
         for k in duplicates:
-            num = freq.setdefault(k,[0,0])
-            freq[k][0] = num[0]+1
+            num = freq.setdefault(k, [0, 0])
+            freq[k][0] = num[0] + 1
 
-        if(rounded):
+        if rounded:
 
             for k in freq.keys():
-                freq[k][1] = str( round(100*freq[k][0]/d_size,rounded) )+' %'
+                freq[k][1] = str(round(100 * freq[k][0] / d_size, rounded)) + ' %'
                 freq[k] = tuple(freq[k])
-        else: 
-            
+        else:
+
             for k in freq.keys():
-                freq[k][1] = str(100*freq[k][0]/d_size)+' %'
+                freq[k][1] = str(100 * freq[k][0] / d_size) + ' %'
                 freq[k] = tuple(freq[k])
-    
+
     else:
-         for k in duplicates:
-            num = freq.setdefault(k,0)
-            freq[k] = num+1
-    
+        for k in duplicates:
+            num = freq.setdefault(k, 0)
+            freq[k] = num + 1
+
     return freq
 
 def hamming_distance(sa, sb, maxls):
+    """Return the normalised Hamming distance between two strings.
 
-    assert(len(sa)==len(sb))
+    ``maxls`` denotes the divisor used to normalise the distance which in
+    this project corresponds to the longer of the two compared strings.
+    """
+
+    assert len(sa) == len(sb)
     dis = 0
 
     for i in range(len(sa)):
-        if sa[i] != sb[i]: dis += 1
+        if sa[i] != sb[i]:
+            dis += 1
 
-    return dis/maxls
+    return dis / maxls
 
-def mutate(arg,map_len):
+def mutate(arg, map_len):
+    """Apply a random mutation to a candidate solution.
+
+    A single character of the candidate string is changed to a random
+    value within the alphabet defined for that position.
+    ``arg`` is a tuple ``([chars], length)`` and ``map_len`` provides the
+    alphabet size for each position.
+    """
+
     random.seed(None)
-    randomCharacter = random.randint(0,arg[1]-1)
-    rand = random.randint(1,map_len[randomCharacter])
-    arg[0][randomCharacter] = chr( (ord(arg[0][randomCharacter])-65+rand)%map_len[randomCharacter]  + 65)
+    randomCharacter = random.randint(0, arg[1] - 1)
+    rand = random.randint(1, map_len[randomCharacter])
+    arg[0][randomCharacter] = chr(
+        (ord(arg[0][randomCharacter]) - 65 + rand) % map_len[randomCharacter] + 65
+    )
 
 @profile
 def split(container, count):
-    # splitting container into equal length chunks
+    """Split *container* into ``count`` nearly equal chunks.
+
+    This helper is used to distribute the workload across MPI processes.
+    """
+
     return [container[_i::count] for _i in range(count)]
 
 @profile
 def execute():
+    """Run the evolutionary search across MPI workers.
+
+    The command line arguments are expected in the following order::
+
+        script -g <generations> -m <mutation_rate> -b <best_counter>
+               -n <num_candidates> <strings...>
+
+    The remaining arguments are the strings for which a closest string is
+    sought.  Each worker normalises the alphabet and contributes to the
+    evolutionary search.
+    """
+
     random.seed(None)
     argm = 10
     instance = []
@@ -64,16 +112,18 @@ def execute():
     best_counter = int(sys.argv[6])
     number_cand = int(sys.argv[8])
 
+    # read all input strings from the command line
     while argm < len(sys.argv):
         instance.append(sys.argv[argm])
         argm += 1
 
+    # prepare helper data structures
     al = set([c for s in instance for c in s])
     instance = [list(inst) for inst in instance]
     maxlen = max([len(s) for s in instance])
-    instance = [(i,len(i)) for i in instance]
+    instance = [(i, len(i)) for i in instance]
 
-    # 2. Normalization of the strings
+    # 2. Normalisation of the strings
 
     # for the first character up to the character 'maxlen'
     mapping = []
@@ -81,11 +131,11 @@ def execute():
 
     maxAl = 0
 
-    winner = ['',0]
+    winner = ['', 0]
     minima = m = 9999
 
-    eqInstances = [ (l[0]+['@']*(maxlen-l[1]), l[1]) for l in instance ]
-    initial = [  ( ['A']*(j+1)+['@']*(maxlen-1-j) , j+1) for j in range(maxlen) ]
+    eqInstances = [(l[0] + ['@'] * (maxlen - l[1]), l[1]) for l in instance]
+    initial = [(['A'] * (j + 1) + ['@'] * (maxlen - 1 - j), j + 1) for j in range(maxlen)]
     parents = initial[:]
 
     if COMM.rank == 0:
@@ -98,86 +148,107 @@ def execute():
     # scatter jobs across cores
     jobs = COMM.scatter(jobs, root=0)
 
+    # Process the assigned jobs
     for job in jobs:
         for i in range(maxlen):
 
-            common = count_all([ k[0][i] for k in instance if i < len(k[0]) ])
+            common = count_all([k[0][i] for k in instance if i < len(k[0])])
             common = list(common.items())
-            common = sorted( common,key = lambda ai: ai[1],reverse=True )
-            map_len.append( len(common) )
-            maxAl = max( maxAl,len(common) )
+            common = sorted(common, key=lambda ai: ai[1], reverse=True)
+            map_len.append(len(common))
+            maxAl = max(maxAl, len(common))
             charmap = {}
             tempm = {}
-                
+
             for j in range(len(common)):
-                charmap[chr(65+j)] = common[j][0]
-                tempm[common[j][0]] = chr(65+j)
+                charmap[chr(65 + j)] = common[j][0]
+                tempm[common[j][0]] = chr(65 + j)
 
             for elm in instance:
-                if i < len(elm[0]): elm[0][i] = tempm[elm[0][i]]
+                if i < len(elm[0]):
+                    elm[0][i] = tempm[elm[0][i]]
 
             mapping.append(charmap)
-        
+
         for init in initial:
-            for mr in range(mutation_rate): mutate(init,map_len)
+            for mr in range(mutation_rate):
+                mutate(init, map_len)
 
         parents.extend(initial)
 
+        # evolutionary loop
         for g in range(generation):
 
-            fitnessDistanz = list (map(lambda candid: max( map(lambda l: hamming_distance(candid,l,max(l[1],candid[1])) , eqInstances ) ) , parents) )
+            fitnessDistanz = list(
+                map(
+                    lambda candid: max(
+                        map(
+                            lambda l: hamming_distance(
+                                candid, l, max(l[1], candid[1])
+                            ),
+                            eqInstances,
+                        )
+                    ),
+                    parents,
+                )
+            )
 
             result = 0
             m = fitnessDistanz[0]
             for i in range(len(fitnessDistanz)):
-                if m > fitnessDistanz[i]: 
+                if m > fitnessDistanz[i]:
                     result = i
                     m = fitnessDistanz[i]
 
-            predecessor = ''.join(winner[0])	
+            predecessor = ''.join(winner[0])
             winner = parents[result]
             best_counter -= int(minima <= m)
-            
-            if (not best_counter) or predecessor==''.join(winner[0]): 
-                break;
+
+            if (not best_counter) or predecessor == ''.join(winner[0]):
+                break
 
             minima = m
 
-            parents = [ [ winner[0][:],winner[1] ] for a in range(number_cand) ]
-            
+            parents = [[winner[0][:], winner[1]] for a in range(number_cand)]
+
             for cand in parents:
                 for mr in range(mutation_rate):
-                    mutate(cand,map_len)
-                    
-                    if cand[1] > 1: 
+                    mutate(cand, map_len)
 
-                        probability = int(1/random.randint(1,4))
-                        cand[0][cand[1]-1] = chr ( ord(cand[0][cand[1]-1]) + probability*(-ord( cand[0][cand[1]-1] )+ord('@')) )
+                    if cand[1] > 1:
+
+                        probability = int(1 / random.randint(1, 4))
+                        cand[0][cand[1] - 1] = chr(
+                            ord(cand[0][cand[1] - 1])
+                            + probability * (-ord(cand[0][cand[1] - 1]) + ord('@'))
+                        )
                         cand[1] -= probability
 
                     if cand[1] < maxlen:
 
-                        probability = int(1/random.randint(1,4))
-                        cand[0][cand[1]] = chr ( ord(cand[0][cand[1]]) + probability*random.randint(1,maxAl-1) )
+                        probability = int(1 / random.randint(1, 4))
+                        cand[0][cand[1]] = chr(
+                            ord(cand[0][cand[1]])
+                            + probability * random.randint(1, maxAl - 1)
+                        )
                         cand[1] += probability
-                    
-            parents.append([ winner[0][:],winner[1] ])
+
+            parents.append([winner[0][:], winner[1]])
 
     # gather results on rank 0
     mapping = MPI.COMM_WORLD.gather(mapping, root=0)
 
-
     if COMM.rank == 0:
         mapping = [_i for temp in mapping for _i in temp]
-        
-        winner[0] = list( ''.join(winner[0]).replace('@','') )
-        print( str(winner) )
+
+        winner[0] = list(''.join(winner[0]).replace('@', ''))
+        print(str(winner))
         print('Outcomes \n')
         for c in range(winner[1]):
             if winner[0][c] in mapping[c].keys():
-                winner[0][c] = mapping[c][ winner[0][c] ]
-        print('Best finding solution: '+ ''.join(winner[0]) )
-        print('k = '+ str(m) )
+                winner[0][c] = mapping[c][winner[0][c]]
+        print('Best finding solution: ' + ''.join(winner[0]))
+        print('k = ' + str(m))
 
 if __name__ == "__main__":
     execute()
